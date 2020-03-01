@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <!-- 公共样式 开始 -->
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css">
+    <script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/layui/css/layui.css">
+    <script type="text/javascript" src="static/layui/layui.js"></script>
+    <script src="static/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+    <script src="static/framework/printThis.js"></script>
+</head>
+
+<body>
+<div class="cBody">
+    <div class="layui-row" id="dayindaju1">
+        <form class="layui-form" action="" method="post">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">房间号:</label>
+                    <div class="layui-input-inline">
+                        <input type="Rprice" name="Rnum" required lay-verify="required" autocomplete="off" placeholder="请输入房间号" class="layui-input">
+                    </div>
+
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" lay-submit lay-filter="loginBut">删除</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <table class="layui-table" id="demo" lay-filter="test">
+        <thead>
+        <tr>
+            <th>房间类型</th>
+            <th>房间号</th>
+            <th >房间状态</th>
+            <th >房间配置</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<script>
+    $.ajax({
+        url: '/Room_search',
+        type: "Get",
+        dataType: "json",
+        error: function (arg1) {
+            console.log(arg1)
+        },
+        success: function (obj) {
+            var str = '';//动态拼接table
+            for (var i = 0; i < obj.length; i++) {
+                str += '<tr>';
+                str += '<td>' + obj[i].Rtype + '</td>';
+                str += '<td>' + obj[i].Rnum + '</td>';
+                str += '<td >' + obj[i].Rsta + '</td>';
+                str += '<td >' + obj[i].Message + '</td>';
+                str += '</tr>';
+            }
+            //运用html方法将拼接的table添加到tbody中
+            $("#tbody").html(str);
+        }
+    });
+</script>
+<script>
+
+    layui.use('form', function() {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(loginBut)', function(data) {
+            $.ajax({
+                url:'/roomcost_change',
+                type:"POST",
+                data:data.field,
+                dataType:"json",
+                error:function(arg1){
+                    console.log(arg1)
+                },
+                success:function(obj){
+                    confirm("修改成功")
+                }
+            }
+        });
+        return false;
+    });
+    });
+</script>
+</body>
+</html>

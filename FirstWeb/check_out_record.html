@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <!-- 公共样式 开始 -->
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css">
+    <script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/layui/css/layui.css">
+    <script type="text/javascript" src="static/layui/layui.js"></script>
+    <script src="static/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+    <script src="static/framework/printThis.js"></script>
+</head>
+
+<body>
+<div class="cBody">
+    <div class="layui-row" id="dayindaju1">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>客户姓名</th>
+                <th>房间类型</th>
+                <th >房间号</th>
+                <th >电话号码</th>
+                <th >入住时间</th>
+                <th >退房时间</th>
+                <th >居住时间</th>
+                <th >费用</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $.ajax({
+        url: '/userroom_search3',
+        type: "Get",
+        dataType: "json",
+        error: function (arg1) {
+            console.log(arg1)
+        },
+        success: function (obj) {
+            var str = '';//动态拼接table
+            for (var i = 0; i < obj.length; i++) {
+                str += '<tr>';
+                str += '<td>' + obj[i].Username + '</td>';
+                str += '<td>' + obj[i].Rtype + '</td>';
+                str += '<td>' + obj[i].Rnum + '</td>';
+                str += '<td>' + obj[i].Phone + '</td>';
+                str += '<td>' + obj[i].Starttime + '</td>';
+                str += '<td>' + obj[i].Endtime + '</td>';
+                str += '<td>' + obj[i].Alltime + '</td>';
+                str += '<td>' + obj[i].Fee + '</td>';
+                str += '</tr>';
+            }
+            //运用html方法将拼接的table添加到tbody中
+            $("#tbody").html(str);
+        }
+    });
+</script>
+</body>
+
+</html>

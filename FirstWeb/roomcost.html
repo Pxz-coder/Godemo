@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- 公共样式 开始 -->
+		<link rel="stylesheet" type="text/css" href="static/css/base.css">
+		<link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css">
+		<script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="static/layui/css/layui.css">
+		<script type="text/javascript" src="static/layui/layui.js"></script>
+		<script src="static/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+		<script src="static/framework/printThis.js"></script>
+	</head>
+
+	<body>
+		<div class="cBody">
+			<div class="layui-row" id="dayindaju1">
+				<table class="layui-table">
+					<thead>
+					<tr>
+						<th>房间类型</th>
+						<th>房间配置</th>
+						<th >价格（元/天）</th>
+					</tr>
+					</thead>
+					<tbody id="tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script>
+			$.ajax({
+				url: '/roomcost_search',
+				type: "Get",
+				dataType: "json",
+				error: function (arg1) {
+					console.log(arg1)
+				},
+				success: function (obj) {
+					var str = '';//动态拼接table
+					for (var i = 0; i < obj.length; i++) {
+						str += '<tr>';
+						str += '<td>' + obj[i].Rtype + '</td>';
+						str += '<td>' + obj[i].Message + '</td>';
+						str += '<td>' + obj[i].Rcost + '</td>';
+						str += '</tr>';
+					}
+					//运用html方法将拼接的table添加到tbody中
+					$("#tbody").html(str);
+				}
+			});
+		</script>
+	</body>
+
+</html>

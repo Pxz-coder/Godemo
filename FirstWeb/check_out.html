@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css">
+    <script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/layui/css/layui.css">
+    <script type="text/javascript" src="static/layui/layui.js"></script>
+    <script src="static/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+    <style>
+        .layui-form-label{
+            width: 80px;
+        }
+        .layui-input-block{
+            margin-left: 130px;
+        }
+        .layui-form{
+            margin-right: 30%;
+        }
+    </style>
+
+</head>
+<body>
+<div class="cBody">
+    <form id="addForm" class="layui-form" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label" >客户名：</label>
+            <div class="layui-input-inline shortInput">
+                <input type="text" required lay-verify="required" name="name" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" >房间号：</label>
+            <div class="layui-input-inline shortInput">
+                <input type="text" name="number" required lay-verify="required|number" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" >退房时间：</label>
+            <div class="layui-input-inline shortInput">
+                <input type="text" name="time" class="layui-input"  autocomplete="off" id="DeadlineTime"/>
+                <i class="fa fa-caret-down cursor creat-down-date"></i>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="submitBut">退房</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+    <script>
+        layui.use(['upload','form'], function() {
+            var form = layui.form;
+            var upload = layui.upload;
+            var layer = layui.layer;
+            form.verify({
+                //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+                ZHCheck: [
+                    /^[\u0391-\uFFE5]+$/
+                    ,'只允许输入中文'
+                ]
+            });
+            //拖拽上传
+            upload.render({
+                elem: '#goodsPic',
+                url: '/upload/',
+                done: function(res) {
+                    console.log(res)
+                }
+            });
+        });
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#DeadlineTime' //指定元素
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

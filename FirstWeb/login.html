@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>login</title>
+	<link rel="stylesheet" type="text/css" href="static/css/base.css"><!--公共样式-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css"><!--字体标签样式-->
+	<script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script><!--jquery-->
+	<link rel="stylesheet" type="text/css" href="static/layui/css/layui.css"><!--layui-->
+	<script type="text/javascript" src="static/layui/layui.js"></script><!--layui-->
+	<link rel="stylesheet" type="text/css" href="static/css/login.css">
+	<script type="text/javascript" src="static/js/login1.js"></script>
+</head>
+<body>
+<div class="loginBg"></div>
+<div class="login_main">
+	<div class="box">
+		<div class="left">
+			<img src="static/images/logo.jpg" />
+			<p>酒店系统</p>
+		</div>
+		<div class="right">
+			<form class="layui-form layui-form-pane" method="post">
+				<div class="layui-form-item">
+					<label class="layui-form-label login_title"><i class="iconfont icon-gerenzhongxin-denglu"></i></label>
+					<div class="layui-input-block login_input">
+						<input type="text" name="name" required lay-verify="required" autocomplete="off" placeholder="请输入您的用户名" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label login_title"><i class="iconfont icon-mima1"></i></label>
+					<div class="layui-input-block login_input">
+						<input type="password" name="password" required lay-verify="required" autocomplete="off" placeholder="请输入密码" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<p class="message" >还没有用户账户? <a  href="register">立刻创建用户</a></p>
+					<button class="layui-btn layui-btn-fluid login_but" lay-submit lay-filter="loginBut">登 录</button>
+				</div>
+				<div class="layui-form-item">
+					<input type="radio"  name="type" value="管理" title="管理" checked lay-filter="userType">
+					<input type="radio"  name="type" value="接待" title="接待" lay-filter="userType">
+					<input type="radio"  name="type" value="用户" title="用户" lay-filter="userType">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+	layui.use('form', function() {
+			var form = layui.form;
+         //样式
+		form.on('radio(userType)', function(data){
+			if(data.value == "管理"){
+				$(".loginBg").css("background","url('static/images/login2.jpg')");
+				$(".login_but").css("cssText", "background-color:#57c201 !important");
+			}
+			if(data.value == "接待"){
+				$(".loginBg").css("background","url('static/images/login.jpg')");
+				$(".login_but").css("cssText", "background-color:#16c6f9 !important");
+			}
+			if(data.value == "用户"){
+				$(".loginBg").css("background","url('static/images/login3.jpg')");
+				$(".login_but").css("cssText", "background-color:#ffd205 !important");
+			}
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>PXZ</title>
+		<!-- 公共样式 开始 -->
+		<link rel="stylesheet" type="text/css" href="static/css/base.css">
+		<link rel="stylesheet" type="text/css" href="static/fonts/iconfont.css">
+		<script type="text/javascript" src="static/framework/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="static/layui/css/layui.css">
+		<script type="text/javascript" src="static/layui/layui.js"></script>
+		<script src="static/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody">
+			<div class="console">
+				<form class="layui-form" action="" method="post">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">房间类型</label>
+							<div class="layui-input-inline">
+								<select type="text" id="text" name="type" >
+									<option value="Vip">Vip</option>
+									<option value="中等">中等</option>
+									<option value="普通">普通</option>
+								</select>
+							</div>
+
+							<label class="layui-form-label">房间状态</label>
+							<div class="layui-input-inline">
+								<select type="text" id="text" name="status" >
+									<option value="空闲">空闲</option>
+									<option value="入住">入住</option>
+									<option value="预定">预定</option>
+								</select>
+							</div>
+						</div>
+						<button class="layui-btn  login_but" lay-submit lay-filter="loginBut"  type="button" value="Submit">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>房间类型</th>
+						<th>房间号</th>
+						<th>配置</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+				</tbody>
+			</table>
+			
+			<!-- layUI 分页模块 -->
+			<div class="h_55"></div>
+			<div id="pages"></div>
+			<script>
+				layui.use('form', function() {
+										var form = layui.form;
+										//监听提交
+										form.on('submit(loginBut)', function(data) {
+											$.ajax({
+												url:'/room_search',
+												type:"POST",
+												data:data.field,
+												dataType:"json",
+												error:function(arg1){
+													console.log(arg1)
+												},
+												success:function(obj){
+													var str = '';//动态拼接table
+													for(var i=0;i<obj.length;i++) {
+														str += '<tr>';
+														str += '<td>' + obj[i].Rtype + '</td>';
+														str += '<td>' + obj[i].Rnum  + '</td>';
+														str += '<td>' + obj[i].Message + '</td>';
+														str += '<td>' + obj[i].Rsta + '</td>';
+														str += '</tr>';
+								}
+								//运用html方法将拼接的table添加到tbody中
+								$("#tbody").html(str);
+							}
+						});
+						return false;
+					});
+				});
+				layui.use(['laypage', 'layer'], function() {
+					var laypage = layui.laypage,
+						layer = layui.layer;
+					//总页数大于页码总数
+					laypage.render({
+					    elem: 'pages'
+					    ,count: 100
+					    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					    ,jump: function(obj){
+					      console.log(obj)
+					    }
+					});
+				});
+
+			</script>
+		</div>
+	</body>
+
+</html>
